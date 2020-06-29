@@ -1,7 +1,7 @@
 #
 # matlab root 
 #
-MATLABROOT	= ~/installed/MATLAB/R2017b/
+MATLABROOT	= /Applications/MATLAB_R2020a.app
 
 
 #

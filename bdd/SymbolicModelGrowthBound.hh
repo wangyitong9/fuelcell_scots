@@ -10,7 +10,7 @@
 
 #include <iostream>
 #include <stdexcept>
-
+#include <string>
 
 #include "TicToc.hh"
 
@@ -149,6 +149,25 @@ public:
         }
         post &= zz;
       }
+      /* Storing the BDD of post states given the current state x and input u*/
+      std::string filename="filedir/x(";
+      for(size_t i=0; i<dim; ++i) {
+        filename+=std::to_string(x[i]);
+      }
+      filename+=")u(";
+      for(size_t i=0; i<inputSpace_->getDimension(); ++i) {
+        filename+=std::to_string(u[i]);
+      }
+      filename+=")";
+      SymbolicSet p(*stateSpace_);
+      if (post > constraints)
+        p.setSymbolicSet(ddmgr_->bddZero());
+      else
+        p.setSymbolicSet(post);
+      const char* fn = filename.c_str();
+      p.writeToFile(fn);
+      
+      
       if(!(post==ddmgr_->bddZero()) && post<= constraints) {
         /* compute bdd for the current x and u element and add x' */
         for(size_t i=0;i<nssVars_; i++)
